@@ -7,6 +7,7 @@ camunda.bpm:
     create: All tasks
   database:
     type: postgres
+  deployment-resource-pattern: classpath:*.bpmn
 
 server:
   port: 9090
@@ -15,7 +16,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/camunda2
+    url: jdbc:postgresql://localhost:5432/camunda3
     username: postgres
     password: mysecretpassword
     driver-class-name: org.postgresql.Driver

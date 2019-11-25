@@ -1,6 +1,7 @@
 package com.test.bpmn.demo.dto;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 public class TaskResponse {
 
@@ -17,6 +18,8 @@ public class TaskResponse {
     private LocalDateTime dueDate;
 
     private LocalDateTime completedDate;
+
+    private Map<String, Object> data;
 
     public String getName() {
         return name;
@@ -72,5 +75,13 @@ public class TaskResponse {
 
     public String getTaskId() {
         return taskId;
+    }
+
+    public Map<String, Object> getData() {
+        return data;
+    }
+
+    public void setData(Map<String, Object> data) {
+        this.data = data;
     }
 }

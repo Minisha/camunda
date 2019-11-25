@@ -2,6 +2,7 @@ package com.test.bpmn.demo.rest;
 
 import com.test.bpmn.demo.CamundaProcessManager;
 import com.test.bpmn.demo.dto.TaskResponse;
+import com.test.bpmn.demo.dto.UserRequest;
 import org.camunda.bpm.engine.history.HistoricProcessInstance;
 import org.camunda.bpm.engine.history.HistoricTaskInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
@@ -34,8 +35,8 @@ public class CaseRestController {
   }
 
   @RequestMapping(method = RequestMethod.GET, value = "/completed-process")
-  public List<HistoricProcessInstance> getAllCompletedProcess() {
-    return camundaProcessManager.getAllCompletedProcessInstance();
+  public ResponseEntity<List<String>> getAllCompletedProcess() {
+    return new ResponseEntity<>(camundaProcessManager.getAllCompletedProcessInstance(), HttpStatus.OK);
   }
 
   @RequestMapping(method = RequestMethod.GET, value = "/task/{processId}")
@@ -44,7 +45,7 @@ public class CaseRestController {
   }
 
   @RequestMapping(method = RequestMethod.GET, value = "/historyTask/{processId}")
-  public List<HistoricTaskInstance> getAllHistoryTasks(@PathVariable String processId) {
+  public List<TaskResponse> getAllHistoryTasks(@PathVariable String processId) {
     return camundaProcessManager.getCompletedTask(processId);
   }
 
@@ -56,6 +57,11 @@ public class CaseRestController {
   @RequestMapping(method = RequestMethod.GET, value = "/completeTask/{taskId}")
   public void claimTask(@PathVariable String taskId) {
     camundaProcessManager.completeTask(taskId);
+  }
+
+  @RequestMapping(method = RequestMethod.POST, value = "/submitForm/{taskId}")
+  public void submitForm(@PathVariable String taskId, @RequestBody UserRequest userRequest) {
+    camundaProcessManager.submitForm(taskId, userRequest);
   }
 
 }
