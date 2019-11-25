@@ -1,11 +1,13 @@
 package com.test.bpmn.demo.rest;
 
 import com.test.bpmn.demo.CamundaProcessManager;
+import com.test.bpmn.demo.dto.TaskResponse;
 import org.camunda.bpm.engine.history.HistoricProcessInstance;
 import org.camunda.bpm.engine.history.HistoricTaskInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +28,9 @@ public class CaseRestController {
   }
 
   @RequestMapping(method = RequestMethod.GET, value = "/process")
-  public List<ProcessInstance> getAllProcess() {
-    return camundaProcessManager.getAllProcessInstance();
+  public ResponseEntity<List<String>> getAllProcess() {
+    List<String> allProcessInstance = camundaProcessManager.getAllProcessInstance();
+    return new ResponseEntity<>(allProcessInstance, HttpStatus.OK);
   }
 
   @RequestMapping(method = RequestMethod.GET, value = "/completed-process")
@@ -36,7 +39,7 @@ public class CaseRestController {
   }
 
   @RequestMapping(method = RequestMethod.GET, value = "/task/{processId}")
-  public List<Task> getAllTasks(@PathVariable String processId) {
+  public List<TaskResponse> getAllTasks(@PathVariable String processId) {
     return camundaProcessManager.getTask(processId); //Map to task object before returning to UI
   }
 
@@ -45,5 +48,14 @@ public class CaseRestController {
     return camundaProcessManager.getCompletedTask(processId);
   }
 
+  @RequestMapping(method = RequestMethod.GET, value = "/claimTask/{staffId}/{taskId}")
+  public void claimTask(@PathVariable String staffId, @PathVariable String taskId) {
+     camundaProcessManager.claimATask(taskId, staffId);
+  }
+
+  @RequestMapping(method = RequestMethod.GET, value = "/completeTask/{taskId}")
+  public void claimTask(@PathVariable String taskId) {
+    camundaProcessManager.completeTask(taskId);
+  }
 
 }
