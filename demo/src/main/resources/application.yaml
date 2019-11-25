@@ -1,0 +1,24 @@
+camunda.bpm:
+  admin-user:
+    id: admin
+    password: admin
+    firstName: admin
+  filter:
+    create: All tasks
+  database:
+    type: postgres
+
+server:
+  port: 9090
+
+
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/camunda2
+    username: postgres
+    password: mysecretpassword
+    driver-class-name: org.postgresql.Driver
+    schema-update: create-drop
+
+
