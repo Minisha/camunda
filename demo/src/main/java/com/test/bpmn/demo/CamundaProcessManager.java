@@ -72,12 +72,11 @@ public class CamundaProcessManager {
                         .list();
 
         return list.stream().map(r -> {
-            TaskFormData formData = camunda.getFormService().getTaskFormData(r.getId());
+            //TaskFormData formData = camunda.getFormService().getTaskFormData(r.getId());
             TaskResponse response = new TaskResponse();
             response.setAssignee(r.getAssignee());
             response.setName(r.getName());
             response.setTaskId(r.getId());
-            response.setData(null);
             return response;
         }).collect(Collectors.toList());
     }
